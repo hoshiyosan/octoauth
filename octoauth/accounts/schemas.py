@@ -10,6 +10,10 @@ class AccountRead(BaseModel):
     def from_model(cls, model: DBAccount) -> "AccountRead":
         return cls(uuid=model.uuid, email=model.email)
 
+class AccountCredentials(BaseModel):
+    email: str
+    password: str
+
 class AccountCreate(BaseModel):
     email: str
     password: str

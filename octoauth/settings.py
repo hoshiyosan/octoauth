@@ -1,21 +1,25 @@
 from os import getenv as __getenv
-from octoauth.middleware.configure import Configuration
+from datetime import timedelta
+from octoauth.middleware.configure import Configuration, file_content
 
 # Development configuration
 dev_config = Configuration(
-    JWT_SECRET_KEY=3, 
-    SQLALCHEMY_DATABASE_URI='sqlite:///:memory:'
+    JWT_LIFETIME=timedelta(hours=10),
+    JWT_SECRET_KEY=file_content('tests/pki/private.pem'),
+    SQLALCHEMY_DATABASE_URI='sqlite:///db.sqlite'
 )
 
 # Test configuration
 test_config = Configuration(
-    JWT_SECRET_KEY=5,
+    JWT_LIFETIME=timedelta(hours=1),
+    JWT_SECRET_KEY=file_content('tests/pki/private.pem'),
     SQLALCHEMY_DATABASE_URI='sqlite:///:memory:'
 )
 
 # Production configuration
 prod_config = Configuration(
-    JWT_SECRET_KEY=3, 
+    JWT_LIFETIME=timedelta(minutes=15),
+    JWT_SECRET_KEY=file_content('tests/pki/private.pem'),
     SQLALCHEMY_DATABASE_URI='sqlite:///db.sqlite'
 )
 

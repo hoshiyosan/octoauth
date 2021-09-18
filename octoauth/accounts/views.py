@@ -9,7 +9,7 @@ from octoauth.accounts.dao import AccountDAO
 router = APIRouter()
 
 @router.get('/accounts', response_model=List[AccountRead])
-def search_account():
+def search_accounts():
     return AccountDAO.search()
 
 @router.get('/accounts/{account_uid}', response_model=AccountRead)
@@ -21,5 +21,5 @@ def create_account(account_data: AccountCreate):
     return AccountDAO.create(account_data)
 
 @router.delete('/accounts/{account_uid}', response_model=AccountRead)
-def create_account(account_uid: str):
+def delete_account(account_uid: str):
     return AccountDAO.delete(account_uid)

@@ -9,13 +9,14 @@ session_factory = sessionmaker(bind=db_engine)
 Session = scoped_session(session_factory)
 DBModel = declarative_base(bind=db_engine)
 
-# define models
+
 class DBAccount(DBModel):
     __tablename__ = 'accounts'
     id = Column(Integer, primary_key=True)
     uid = Column(String(36), unique=True)
     email = Column(String(50), unique=True)
     password_hash = Column(String(256), nullable=False)
+
 
 DBModel.metadata.drop_all()
 DBModel.metadata.create_all()

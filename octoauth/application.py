@@ -1,16 +1,13 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from octoauth.errors import OctoauthError, ObjectNotFound, UniqueConstraintFailed
+from octoauth.errors import OctoauthError, ERROR_HTTP_STATUS
 
 from octoauth.accounts.views import router as accounts_router
+from octoauth.tokens.views import router as tokens_router
 
 api = FastAPI()
 
-ERROR_HTTP_STATUS = {
-    ObjectNotFound: 404,
-    UniqueConstraintFailed: 409
-}
 
 @api.exception_handler(OctoauthError)
 def on_custom_exception(request: Request, error: OctoauthError):
@@ -20,3 +17,4 @@ def on_custom_exception(request: Request, error: OctoauthError):
     )
 
 api.include_router(accounts_router)
+api.include_router(tokens_router)
